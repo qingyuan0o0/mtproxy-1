@@ -1,3 +1,10 @@
+FROM alpine AS builder
+RUN apk add --no-cache libconfig libconfig-dev make gcc build-base perl pcre-dev pcre git
+RUN mkdir /build
+RUN git clone https://github.com/yrutschle/sslh.git /build
+RUN cd /build; export USELIBWRAP=; make -e install
+COPY --from=builder /build/sslh-select /usr/local/bin/sslh
+
 FROM alpine:3.6
 
 # Uncomment if local sources
