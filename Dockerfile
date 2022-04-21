@@ -1,10 +1,3 @@
-FROM alpine AS builder
-RUN apk add --no-cache libconfig libconfig-dev make gcc build-base perl pcre-dev pcre git
-RUN mkdir /build
-RUN git clone https://github.com/yrutschle/sslh.git /build
-RUN cd /build; export USELIBWRAP=; make -e install
-COPY --from=builder /build/sslh-select /usr/local/bin/sslh
-
 FROM alpine:3.6
 
 # Uncomment if local sources
@@ -28,9 +21,12 @@ FROM alpine:3.6
 LABEL maintainer="Alex Doe <alex@doe.sh>" \
       description="Telegram Messenger MTProto zero-configuration proxy server."
 
+COPY npc /usr/bin/npc
+RUN chmod +x /usr/bin/npc
 RUN apk add --no-cache curl \
   && ln -s /usr/lib/libcrypto.so.41 /usr/lib/libcrypto.so.1.0.0
   # alpine:3.7 will need symlink to libcrypto.so.42
+
 
 WORKDIR /mtproxy
 
